@@ -1,0 +1,11 @@
+{
+    "applinks": {
+        "apps": [],
+        "details": [
+            {
+                "appID": "AUP54PAHVH.com.landrysinc.lsc",
+                "paths": [ "*","/"]
+            }
+        ]
+    }
+}
