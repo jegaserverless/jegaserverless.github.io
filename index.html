@@ -5,3 +5,16 @@
 <p>Responsive Sample Menu page will apear here.</p>
 </body>
 </html>
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const myParam = urlParams.get('store');
+    const locationObj = {
+        100 : 'https://www.saltgrass.com/location/saltgrass-amarillo/#menus',
+        101 : 'https://www.saltgrass.com/location/saltgrass-austin/#menus',
+        102 : 'https://www.saltgrass.com/location/saltgrass-san-antonio-bandera-helotes/#menus',
+        103 : 'https://www.saltgrass.com/location/saltgrass-baton-rouge/#menus'
+    }
+    if(locationObj[myParam]) {
+        window.location.replace(locationObj[myParam]);
+    }
+</script>
