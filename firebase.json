@@ -1,0 +1,9 @@
+{
+  "hosting": [{
+    "target":"landrysuat",
+    "public": ".\\",
+    "ignore": [
+      "firebase.json"
+    ]
+  }]
+}
