@@ -132,6 +132,7 @@ $InstallerName = "DacFramework.msi"
 $InstallerUrl = "https://go.microsoft.com/fwlink/?linkid=2157201"
 Install-Binary -Url $InstallerUrl -Name $InstallerName
 
+
 ################################################################################
 ##  Desc:  Install SQL PowerShell tool
 ################################################################################
