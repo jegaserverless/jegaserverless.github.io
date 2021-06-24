@@ -108,6 +108,15 @@ function Start-DownloadWithRetry
     return $filePath
 }
 
+# Set TLS1.2
+[Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor "Tls12"
+
+Write-Host "Setup PowerShellGet"
+Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
+
+# Specifies the installation policy
+Set-PSRepository -InstallationPolicy Trusted -Name PSGallery
+
 ################################################################################
 ##  Desc:  Install Azure CLI
 ################################################################################
@@ -136,14 +145,15 @@ Install-Binary -Url $InstallerUrl -Name $InstallerName
 ################################################################################
 ##  Desc:  Install SQL PowerShell tool
 ################################################################################
-$BaseUrl = "https://download.microsoft.com/download/B/1/7/B1783FE9-717B-4F78-A39A-A2E27E3D679D/ENU/x64"
-# install required MSIs
-$SQLSysClrTypesName = "SQLSysClrTypes.msi"
-$SQLSysClrTypesUrl = "${BaseUrl}/${SQLSysClrTypesName}"
-Install-Binary -Url $SQLSysClrTypesUrl -Name $SQLSysClrTypesName
-$SharedManagementObjectsName = "SharedManagementObjects.msi"
-$SharedManagementObjectsUrl = "${BaseUrl}/${SharedManagementObjectsName}"
-Install-Binary -Url $SharedManagementObjectsUrl -Name $SharedManagementObjectsName
-$PowerShellToolsName = "PowerShellTools.msi"
-$PowerShellToolsUrl = "${BaseUrl}/${PowerShellToolsName}"
-Install-Binary -Url $PowerShellToolsUrl -Name $PowerShellToolsName
+# $BaseUrl = "https://download.microsoft.com/download/B/1/7/B1783FE9-717B-4F78-A39A-A2E27E3D679D/ENU/x64"
+# # install required MSIs
+# $SQLSysClrTypesName = "SQLSysClrTypes.msi"
+# $SQLSysClrTypesUrl = "${BaseUrl}/${SQLSysClrTypesName}"
+# Install-Binary -Url $SQLSysClrTypesUrl -Name $SQLSysClrTypesName
+# $SharedManagementObjectsName = "SharedManagementObjects.msi"
+# $SharedManagementObjectsUrl = "${BaseUrl}/${SharedManagementObjectsName}"
+# Install-Binary -Url $SharedManagementObjectsUrl -Name $SharedManagementObjectsName
+# $PowerShellToolsName = "PowerShellTools.msi"
+# $PowerShellToolsUrl = "${BaseUrl}/${PowerShellToolsName}"
+# Install-Binary -Url $PowerShellToolsUrl -Name $PowerShellToolsName
+Install-Module -Name SqlServer -RequiredVersion 21.1.18245
