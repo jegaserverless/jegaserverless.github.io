@@ -8,6 +8,8 @@
 #     values containg slashes (i.e. directory path)
 #     The values containing '%' will break the functions
 
+sudo apt-get install jq
+
 getEtcEnvironmentVariable() {
     variable_name="$1"
     # remove `variable_name=` and possible quotes from the line
