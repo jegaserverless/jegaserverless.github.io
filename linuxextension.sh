@@ -4,4 +4,4 @@ sudo dpkg -i packages-microsoft-prod.deb
 sudo apt-get update&&sudo add-apt-repository universe&&sudo apt-get install -y powershell
 curl -sSL https://dot.net/v1/dotnet-install.sh | sudo bash /dev/stdin -c Current
 curl -sSL https://dot.net/v1/dotnet-install.sh | sudo bash /dev/stdin -c LTS
-export PATH="$PATH:$HOME/.dotnet"
+export PATH="$PATH:$HOME/.dotnet" | sudo bash
