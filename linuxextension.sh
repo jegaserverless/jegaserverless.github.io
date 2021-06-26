@@ -8,20 +8,20 @@
 #     values containg slashes (i.e. directory path)
 #     The values containing '%' will break the functions
 
-function getEtcEnvironmentVariable {
+getEtcEnvironmentVariable() {
     variable_name="$1"
     # remove `variable_name=` and possible quotes from the line
     grep "^${variable_name}=" /etc/environment |sed -E "s%^${variable_name}=\"?([^\"]+)\"?.*$%\1%"
 }
 
-function addEtcEnvironmentVariable {
+addEtcEnvironmentVariable() {
     variable_name="$1"
     variable_value="$2"
 
     echo "$variable_name=$variable_value" | sudo tee -a /etc/environment
 }
 
-function replaceEtcEnvironmentVariable {
+replaceEtcEnvironmentVariable() {
     variable_name="$1"
     variable_value="$2"
 
@@ -29,7 +29,7 @@ function replaceEtcEnvironmentVariable {
     sudo sed -i -e "s%^${variable_name}=.*$%${variable_name}=\"${variable_value}\"%" /etc/environment
 }
 
-function setEtcEnvironmentVariable {
+setEtcEnvironmentVariable() {
     variable_name="$1"
     variable_value="$2"
 
@@ -40,7 +40,7 @@ function setEtcEnvironmentVariable {
     fi
 }
 
-function prependEtcEnvironmentVariable {
+prependEtcEnvironmentVariable() {
     variable_name="$1"
     element="$2"
     # TODO: handle the case if the variable does not exist
@@ -48,7 +48,7 @@ function prependEtcEnvironmentVariable {
     setEtcEnvironmentVariable "${variable_name}" "${element}:${existing_value}"
 }
 
-function appendEtcEnvironmentVariable {
+appendEtcEnvironmentVariable() {
     variable_name="$1"
     element="$2"
     # TODO: handle the case if the variable does not exist
@@ -56,12 +56,12 @@ function appendEtcEnvironmentVariable {
     setEtcEnvironmentVariable "${variable_name}" "${existing_value}:${element}"
 }
 
-function prependEtcEnvironmentPath {
+prependEtcEnvironmentPath() {
     element="$1"
     prependEtcEnvironmentVariable PATH "${element}"
 }
 
-function appendEtcEnvironmentPath {
+appendEtcEnvironmentPath() {
     element="$1"
     appendEtcEnvironmentVariable PATH "${element}"
 }
@@ -75,7 +75,7 @@ function appendEtcEnvironmentPath {
 # TODO: there might be the others variables to be processed in the same way as "PATH" variable
 #       ie MANPATH, INFOPATH, LD_*, etc. In the current implementation the values from /etc/evironments
 #       replace the values of the current environment
-function  reloadEtcEnvironment {
+reloadEtcEnvironment() {
     # add `export ` to every variable of /etc/environemnt except PATH and eval the result shell script
     eval $(grep -v '^PATH=' /etc/environment | sed -e 's%^%export %')
     # handle PATH specially
@@ -126,7 +126,7 @@ download_with_retries() {
 ## if ! IsPackageInstalled packageName; then
 ##     echo "packageName is not installed!"
 ## fi
-function IsPackageInstalled {
+IsPackageInstalled() {
     dpkg -S $1 &> /dev/null
 }
 
@@ -145,22 +145,22 @@ get_toolset_value() {
     echo "$(jq -r "$query" $toolset_path)"
 }
 
-function isUbuntu16
+isUbuntu16()
 {
     lsb_release -d | grep -q 'Ubuntu 16'
 }
 
-function isUbuntu18
+isUbuntu18()
 {
     lsb_release -d | grep -q 'Ubuntu 18'
 }
 
-function isUbuntu20
+isUbuntu20()
 {
     lsb_release -d | grep -q 'Ubuntu 20'
 }
 
-function getOSVersionLabel
+getOSVersionLabel()
 {
     lsb_release -cs
 }
