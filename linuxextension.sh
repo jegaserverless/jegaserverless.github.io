@@ -8,8 +8,6 @@
 #     values containg slashes (i.e. directory path)
 #     The values containing '%' will break the functions
 
-sudo apt-get install jq
-
 getEtcEnvironmentVariable() {
     variable_name="$1"
     # remove `variable_name=` and possible quotes from the line
@@ -168,7 +166,7 @@ getOSVersionLabel()
 }
 
 
-
+sudo apt-get update && sudo apt-get install jq
 curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 wget -q https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb
 sudo dpkg -i packages-microsoft-prod.deb
