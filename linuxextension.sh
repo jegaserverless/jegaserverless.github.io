@@ -169,15 +169,26 @@ getOSVersionLabel()
 ################################################################################
 ##  Desc:  Installing tools
 ################################################################################
+# Update the list of packages
 sudo apt-get update
-sudo apt-get install -y jq
+# Install azure cli
 curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+# Install pre-requisite packages.
+sudo apt-get install -y wget apt-transport-https software-properties-common
+# Download the Microsoft repository GPG keys
 wget -q https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb
+# Register the Microsoft repository GPG keys
 sudo dpkg -i packages-microsoft-prod.deb
+# Update the list of products
+sudo apt-get update
+# Enable the "universe" repositories
 sudo add-apt-repository universe
+# Install PowerShell
 sudo apt-get install -y powershell
+# Install jq for JSON parsing in functions
+sudo apt-get install -y jq
+# Install parallel for parallel installation
 sudo apt-get install -y parallel
-
 
 # Ubuntu 20 doesn't support EOL versions
 LATEST_DOTNET_PACKAGES=$(get_toolset_value '.dotnet.aptPackages[]')
@@ -237,10 +248,6 @@ setEtcEnvironmentVariable DOTNET_SKIP_FIRST_TIME_EXPERIENCE 1
 setEtcEnvironmentVariable DOTNET_NOLOGO 1
 setEtcEnvironmentVariable DOTNET_MULTILEVEL_LOOKUP 0
 prependEtcEnvironmentPath '$HOME/.dotnet/tools'
-
-################################################################################
-##  Desc:  Installs Docker Compose
-################################################################################
 
 # Install latest docker-compose from releases
 URL=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r '.assets[].browser_download_url | select(endswith("docker-compose-Linux-x86_64"))')
