@@ -136,7 +136,7 @@ verlte() {
 }
 
 get_toolset_path() {
-    echo "https://raw.githubusercontent.com/actions/virtual-environments/main/images/linux/toolsets/toolset-2004.json"
+    echo "./toolset-2004.json"
 }
 
 get_toolset_value() {
