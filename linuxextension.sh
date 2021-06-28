@@ -185,6 +185,7 @@ sudo apt-get update
 sudo add-apt-repository universe
 # Install PowerShell
 sudo apt-get install -y powershell
+sudo apt-get update
 sudo pwsh -c "Install-Module -Name Az -Force"
 # Install jq for JSON parsing in functions
 sudo apt-get install -y jq
