@@ -185,7 +185,7 @@ sudo apt-get update
 sudo add-apt-repository universe
 # Install PowerShell
 sudo apt-get install -y powershell
-pwsh -c "Install-Module -Name Az -Force"
+sudo pwsh -c "Install-Module -Name Az -Force"
 # Install jq for JSON parsing in functions
 sudo apt-get install -y jq
 # Install parallel for parallel installation
