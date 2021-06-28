@@ -249,6 +249,11 @@ setEtcEnvironmentVariable DOTNET_NOLOGO 1
 setEtcEnvironmentVariable DOTNET_MULTILEVEL_LOOKUP 0
 prependEtcEnvironmentPath '$HOME/.dotnet/tools'
 
+# Install docker
+curl -fsSL https://get.docker.com -o get-docker.sh
+chmod +x get-docker.sh
+sh get-docker.sh
+
 # Install latest docker-compose from releases
 URL=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r '.assets[].browser_download_url | select(endswith("docker-compose-Linux-x86_64"))')
 curl -L $URL -o /usr/local/bin/docker-compose
