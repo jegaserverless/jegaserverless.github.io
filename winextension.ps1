@@ -201,7 +201,7 @@ Invoke-Expression "& { $(Invoke-RestMethod https://aka.ms/install-powershell.ps1
 # the notification will only be shown on the start of subsequent sessions.
 # Also for performance reasons, the check will not start until at least 3 seconds after the session begins.
 [System.Environment]::SetEnvironmentVariable("POWERSHELL_UPDATECHECK", "Off", [System.EnvironmentVariableTarget]::Machine)
-
+Install-Module -Name az -Scope AllUsers -SkipPublisherCheck -Force -y
 
 ################################################################################
 ##  Desc:  Install DacFramework
@@ -216,9 +216,6 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManage
 
 # Install git
 choco install git.install -y -f
-
-# Disable GCM machine-wide
-[Environment]::SetEnvironmentVariable("GCM_INTERACTIVE", "Never", [System.EnvironmentVariableTarget]::Machine)
 
 Add-MachinePathItem "C:\Program Files\Git\bin"
 
