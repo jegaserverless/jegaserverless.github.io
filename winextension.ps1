@@ -210,12 +210,24 @@ $InstallerName = "DacFramework.msi"
 $InstallerUrl = "https://go.microsoft.com/fwlink/?linkid=2157201"
 Install-Binary -Url $InstallerUrl -Name $InstallerName
 
-# Install Git
-$GitBaseURL = "https://github.com/git-for-windows/git/releases/download/v2.32.0.windows.1"
-$GitFileName = "Git-2.32.0-64-bit.exe"
-$GitDownloadUrl = "${GitBaseURL}/${GitFileName}"
-Install-Binary -Url $GitDownloadUrl -Name $GitFileName
+
+# Install Choco install
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+
+# Install git
+Choco-Install -PackageName git -ArgumentList '--installargs="/VERYSILENT /NORESTART /NOCANCEL /SP- /CLOSEAPPLICATIONS /RESTARTAPPLICATIONS /o:PathOption=CmdTools /o:BashTerminalOption=ConHost /o:EnableSymlinks=Enabled /COMPONENTS=gitlfs"'
+
+# Install hub
+Choco-Install -PackageName hub
+
+# Disable GCM machine-wide
+[Environment]::SetEnvironmentVariable("GCM_INTERACTIVE", "Never", [System.EnvironmentVariableTarget]::Machine)
+
 Add-MachinePathItem "C:\Program Files\Git\bin"
+
+# Add well-known SSH host keys to ssh_known_hosts
+ssh-keyscan -t rsa github.com >> "C:\Program Files\Git\etc\ssh\ssh_known_hosts"
+ssh-keyscan -t rsa ssh.dev.azure.com >> "C:\Program Files\Git\etc\ssh\ssh_known_hosts"
 
 # Install Git CLI
 $GHName = "gh_windows_amd64.msi"
