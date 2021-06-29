@@ -210,25 +210,24 @@ $InstallerName = "DacFramework.msi"
 $InstallerUrl = "https://go.microsoft.com/fwlink/?linkid=2157201"
 Install-Binary -Url $InstallerUrl -Name $InstallerName
 
+# # Install Choco install
+# Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
-# Install Choco install
-Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+# # Add well-known SSH host keys to ssh_known_hosts
+# ssh-keyscan -t rsa github.com >> "C:\Program Files\Git\etc\ssh\ssh_known_hosts"
+# ssh-keyscan -t rsa ssh.dev.azure.com >> "C:\Program Files\Git\etc\ssh\ssh_known_hosts"
 
-# Install git
-choco install git.install -y
+# # Install git
+# choco install git.install -y
 
-Add-MachinePathItem "C:\Program Files\Git\bin"
+# Add-MachinePathItem "C:\Program Files\Git\bin"
 
-# Add well-known SSH host keys to ssh_known_hosts
-ssh-keyscan -t rsa github.com >> "C:\Program Files\Git\etc\ssh\ssh_known_hosts"
-ssh-keyscan -t rsa ssh.dev.azure.com >> "C:\Program Files\Git\etc\ssh\ssh_known_hosts"
-
-# Install Git CLI
-$GHName = "gh_windows_amd64.msi"
-$GHAssets = (Invoke-RestMethod -Uri "https://api.github.com/repos/cli/cli/releases/latest").assets
-$GHDownloadUrl = ($GHAssets.browser_download_url -match "windows_amd64.msi") | Select-Object -First 1
-Install-Binary -Url $GHDownloadUrl -Name $GHName
-Add-MachinePathItem "C:\Program Files (x86)\GitHub CLI"
+# # Install Git CLI
+# $GHName = "gh_windows_amd64.msi"
+# $GHAssets = (Invoke-RestMethod -Uri "https://api.github.com/repos/cli/cli/releases/latest").assets
+# $GHDownloadUrl = ($GHAssets.browser_download_url -match "windows_amd64.msi") | Select-Object -First 1
+# Install-Binary -Url $GHDownloadUrl -Name $GHName
+# Add-MachinePathItem "C:\Program Files (x86)\GitHub CLI"
 
 ################################################################################
 ##  Desc:  Install SQL PowerShell tool
