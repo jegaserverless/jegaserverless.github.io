@@ -210,16 +210,6 @@ $InstallerName = "DacFramework.msi"
 $InstallerUrl = "https://go.microsoft.com/fwlink/?linkid=2157201"
 Install-Binary -Url $InstallerUrl -Name $InstallerName
 
-
-################################################################################
-##  Desc:  Install SQL PowerShell tool
-################################################################################
-$AdalsqlBaseUrl = "https://download.microsoft.com/download/6/4/6/64677D6E-06EA-4DBB-AF05-B92403BB6CB9/ENU/x64"
-$AdalsqlName = "adalsql.msi"
-$AdalsqlUrl = "${AdalsqlBaseUrl}/${AdalsqlName}"
-Install-Binary -Url $AdalsqlUrl -Name $AdalsqlName
-Install-Module -Name SqlServer -RequiredVersion 21.1.18245
-
 # Install Git
 $GitBaseURL = "https://github.com/git-for-windows/git/releases/download/v2.32.0.windows.1"
 $GitFileName = "Git-2.32.0-64-bit.exe"
@@ -233,3 +223,12 @@ $GHAssets = (Invoke-RestMethod -Uri "https://api.github.com/repos/cli/cli/releas
 $GHDownloadUrl = ($GHAssets.browser_download_url -match "windows_amd64.msi") | Select-Object -First 1
 Install-Binary -Url $GHDownloadUrl -Name $GHName
 Add-MachinePathItem "C:\Program Files (x86)\GitHub CLI"
+
+################################################################################
+##  Desc:  Install SQL PowerShell tool
+################################################################################
+$AdalsqlBaseUrl = "https://download.microsoft.com/download/6/4/6/64677D6E-06EA-4DBB-AF05-B92403BB6CB9/ENU/x64"
+$AdalsqlName = "adalsql.msi"
+$AdalsqlUrl = "${AdalsqlBaseUrl}/${AdalsqlName}"
+Install-Binary -Url $AdalsqlUrl -Name $AdalsqlName
+Install-Module -Name SqlServer -RequiredVersion 21.1.18245
