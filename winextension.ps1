@@ -1,3 +1,72 @@
+function Test-MachinePath{
+    [CmdletBinding()]
+    param(
+        [string]$PathItem
+    )
+
+    $currentPath = Get-MachinePath
+
+    $pathItems = $currentPath.Split(';')
+
+    if($pathItems.Contains($PathItem))
+    {
+        return $true
+    }
+    else
+    {
+        return $false
+    }
+}
+
+function Set-MachinePath{
+    [CmdletBinding()]
+    param(
+        [string]$NewPath
+    )
+    Set-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name Path -Value $NewPath
+    return $NewPath
+}
+
+function Add-MachinePathItem
+{
+    [CmdletBinding()]
+    param(
+        [string]$PathItem
+    )
+
+    $currentPath = Get-MachinePath
+    $newPath = $PathItem + ';' + $currentPath
+    return Set-MachinePath -NewPath $newPath
+}
+
+function Get-MachinePath{
+    [CmdletBinding()]
+    param(
+
+    )
+    $currentPath = (Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name PATH).Path
+    return $currentPath
+}
+
+function Get-SystemVariable{
+    [CmdletBinding()]
+    param(
+        [string]$SystemVariable
+    )
+    $currentPath = (Get-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name $SystemVariable).$SystemVariable
+    return $currentPath
+}
+
+function Set-SystemVariable{
+    [CmdletBinding()]
+    param(
+        [string]$SystemVariable,
+        [string]$Value
+    )
+    Set-ItemProperty -Path 'Registry::HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager\Environment' -Name $SystemVariable -Value $Value
+    return $Value
+}
+
 function Install-Binary
 {
     <#
@@ -149,5 +218,18 @@ $AdalsqlBaseUrl = "https://download.microsoft.com/download/6/4/6/64677D6E-06EA-4
 $AdalsqlName = "adalsql.msi"
 $AdalsqlUrl = "${AdalsqlBaseUrl}/${AdalsqlName}"
 Install-Binary -Url $AdalsqlUrl -Name $AdalsqlName
-
 Install-Module -Name SqlServer -RequiredVersion 21.1.18245
+
+# Install Git
+$GitBaseURL = "https://github.com/git-for-windows/git/releases/download/v2.32.0.windows.1"
+$GitFileName = "Git-2.32.0-64-bit.exe"
+$GitDownloadUrl = "${GitBaseURL}/${GitFileName}"
+Install-Binary -Url $GitDownloadUrl -Name $GitFileName
+Add-MachinePathItem "C:\Program Files\Git\bin"
+
+# Install Git CLI
+$GHName = "gh_windows_amd64.msi"
+$GHAssets = (Invoke-RestMethod -Uri "https://api.github.com/repos/cli/cli/releases/latest").assets
+$GHDownloadUrl = ($GHAssets.browser_download_url -match "windows_amd64.msi") | Select-Object -First 1
+Install-Binary -Url $GHDownloadUrl -Name $GHName
+Add-MachinePathItem "C:\Program Files (x86)\GitHub CLI"
