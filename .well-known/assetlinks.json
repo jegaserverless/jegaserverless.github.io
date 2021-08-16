@@ -1,0 +1,5 @@
+[{
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target" : { "namespace": "android_app", "package_name": "com.landrysconsumerdev.app",
+                 "sha256_cert_fingerprints": ["42:A8:48:31:43:97:2B:99:32:8C:DB:8D:06:A4:05:61:38:6D:D3:2C:95:EF:84:84:DC:4B:AF:78:DC:00:68:F5"] }
+  }]
