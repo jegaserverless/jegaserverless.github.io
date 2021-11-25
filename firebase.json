@@ -5,5 +5,12 @@
     "ignore": [
       "firebase.json"
     ]
+  },
+  {
+    "target":"landrystest",
+    "public": ".",
+    "ignore": [
+      "firebase.json"
+    ]
   }]
 }
