@@ -16,3 +16,4 @@
     }
   }
 }
+//firebase deploy --project landrys --only hosting:landrystest
