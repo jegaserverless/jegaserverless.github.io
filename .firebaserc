@@ -16,4 +16,5 @@
     }
   }
 }
-//firebase deploy --project landrys --only hosting:landrystest
+//firebase deploy --project landrys --only hosting:landrystest - Dev
+//firebase deploy --project jegatest-sbaq  --only hosting:landrysuat - Prod
